@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<sub-flow name="implementation-signUpSub_Flow" doc:id="7f5f627a-dfb8-484c-b29d-79a1ea1a00c9" >
+		<db:insert doc:name="Insert" doc:id="3c6654ad-0fc2-414d-b488-4ec9534e01e0" config-ref="Database_Config">
+			<db:sql ><![CDATA[Insert into rideapp  (`customerName`, `customerMobile`, `customerAddress`, `customerEmailid`, `customerpassword`) values (:customerName,:customerMobile,:customerAddress,:customerEmailid,:customerpassword);
+]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	customerName:payload.customerName, customerMobile:payload.customerMobile, customerAddress:payload.customerAddress, customerEmailid:payload.customerEmailid, customerpassword:payload.customerpassword
+}]]]></db:input-parameters>
+		</db:insert>
+		<ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" doc:id="a59b4237-3804-4e89-be1e-f1f6b394dcb9">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  status: 200,
+  message: "SignUp Success"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+	</sub-flow>
+</mule>

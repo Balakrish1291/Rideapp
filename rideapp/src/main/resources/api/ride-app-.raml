@@ -1,0 +1,360 @@
+#%RAML 1.0
+title: Ride App 
+/registrations:
+  post:
+    body:
+      application/json:
+        type: object
+        properties:
+          customerName :
+            type : string
+            required: true
+            example: "abcccdef"
+          customerMobile :
+            type: number
+            required: true
+            example: 9000054222
+          customerAddress :
+            type: string
+            required: true
+            example: "Hyderabad"
+          customerEmailid :
+            type: string
+            required: true
+            example: "abc@gmail.com"
+          customerpassword :
+            type: any
+            required: true
+            example: password@123
+        example: !include Libraries/example.json
+
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                "status" : 200,
+                "message" :"SignUp Success"
+              }
+      400:
+        body:
+          application/json:
+            example:  !include Libraries/common/Examples/Erro400-Response-Example.json
+      401:
+        body:
+          application/json:
+            example: !include Libraries/common/Examples/Error401-Response-Example.json
+      404:
+        body:
+          application/json:
+            example: !include Libraries/common/Examples/Error404-Response-Example.json
+      500:
+        body:
+          application/json:
+            example:
+              {
+                "status" : 500,
+                "message" :"Critical Error"
+              }
+
+/signin:
+  get:
+    queryParameters:
+      customerName :
+        type : string
+        required: true
+        example: "MANIROEJNDAR"
+      customerpassword :
+        type: string
+        required: true
+        example: "password@123"
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                "status" : 200,
+                "message" :"SignIn Success"
+              }
+      400:
+        body:
+          application/json:
+            example:  !include Libraries/common/Examples/Erro400-Response-Example.json
+      401:
+        body:
+          application/json:
+            example: !include Libraries/common/Examples/Error401-Response-Example.json
+      404:
+        body:
+          application/json:
+            example: !include Libraries/common/Examples/Error404-Response-Example.json
+      500:
+        body:
+          application/json:
+            example: !include Libraries/common/Examples/Error500-Response-Example.json
+
+
+/book:
+  post:
+    body:
+      application/json:
+        type: object
+        properties:
+          customerName :
+            type : string
+            required: true
+            example: "Abchhd"
+          from :
+            type : string
+            required: true
+            example: "Hyderabad"
+          to :
+            type : string
+            required: true
+            example: "khammam"
+          date:
+            type : string
+            required: true
+            example: "10-04-2021"
+          time:
+            type : string
+            required: true
+            example: "10:10:09 AM"
+          cost:
+            type : string
+            required: true
+            example: "1000"
+          coupon:
+            type : string
+            required: false
+            example: "RIDE100"
+          status:
+            type : string 
+            required : false
+            example: "confirm/cancel"
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                "status" : 200,
+                "message" :"Booking Success"
+              }
+      400:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Erro400-Response-Example.json
+      401:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Error401-Response-Example.json
+      404:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Error404-Response-Example.json
+      500:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Error500-Response-Example.json
+                        
+
+/cancel:
+  patch:
+    body:
+      application/json:
+        type: object
+        properties:
+          ticketNumber :
+            type : string
+            required: true
+            example: "Abchhd"
+          from :
+            type : string
+            required: true
+            example: "Hyderabad"
+          to :
+            type : string
+            required: true
+            example: "khammam"
+          date:
+            type : string
+            required: true
+            example: "10-04-2021"
+          time:
+            type : string
+            required: true
+            example: "10:10:09 AM"
+          status:
+            type : string 
+            required : false
+            example: "confirm/cancel"
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                "status" : 200,
+                "message" :"Cancel Booking"
+              }
+      400:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Erro400-Response-Example.json
+      401:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Error401-Response-Example.json
+      404:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Error404-Response-Example.json
+      500:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Error500-Response-Example.json
+                        
+/checkPast/{customerName}:
+  get:
+   
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              [
+                {
+                  "customerName" : "mani",
+                  "from" : "Hyderabad",
+                  "to" : "Khammam",
+                  "date" : "23-02-2021",
+                  "time" : "09:08:00 AM"
+                },
+                {
+                  "customerName" : "nani",
+                  "from" : "vijayawada",
+                  "to" : "Khammam",
+                  "date" : "19-02-2021",
+                  "time" : "07:08:00 AM"
+                }
+               ]
+      400:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Erro400-Response-Example.json
+      401:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Error401-Response-Example.json
+      404:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Error404-Response-Example.json
+      500:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Error500-Response-Example.json
+    
+/walletManagement:
+  get:
+    queryParameters:
+      customerName :
+        type : string
+        required: true
+        example: "Abchhd"
+    responses:
+      200:
+        body:
+          application/json:
+            example: 
+             [
+                {
+                  "date" : "20-04-2021",
+                  "time" : "10:09:10 AM",
+                  "TotalAmount" : 4000,
+                  "Withdral" : 100,
+                  "Deposite" : 5000   
+               },
+               {
+                "date" : "20-04-2021",
+                  "time" : "10:09:10 AM",
+                  "TotalAmount" : 5000,
+                  "Withdral" : 100,
+                  "Deposite" : 10000 
+               }
+             ]
+      400:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Erro400-Response-Example.json
+      401:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Error401-Response-Example.json
+      404:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Error404-Response-Example.json
+      500:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Error500-Response-Example.json
+
+/discount/{customerName}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+               [ {
+                "coupon" : "50%OFF",
+                "discount" :" 20% OFF",
+                "Description " : "valuable Customer"
+              },
+              {
+                "coupon" : "30%OFF",
+                "discount" : " 20% OFF",
+                "Description " : "valuable Customer"
+              }
+              ]
+      400:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Erro400-Response-Example.json
+      401:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Error401-Response-Example.json
+      404:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Error404-Response-Example.json
+      500:
+        body:
+          application/json:
+            example: !include /Libraries/common/Examples/Error500-Response-Example.json
+
+/customerSupport:
+  post:
+    body:
+      application/json:
+        type: object
+        properties:
+          customerName :
+            type : string
+            required: true
+            example: "abcdef"
+          message :
+            type: string
+            required: true
+            example: "I am unable to get book the ride "
+    responses:
+      200:
+        body:
+          application/json:
+            example: "Sent successfully"
+                                          

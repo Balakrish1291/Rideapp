@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="implementaion-signInSub_Flow" doc:id="0d90b42f-7c54-4fd8-9d3e-290e6c3aad04" >
+		<db:select doc:name="Select" doc:id="899f4a51-19db-4173-8a0b-e2a4800eb2b4" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from rideapp where customerName = :customerName AND customerpassword =:customerpassword]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	'customerName':attributes.queryParams.customerName,
+	'customerpassword':attributes.queryParams.customerpassword
+}]]]></db:input-parameters>
+		</db:select>
+		<choice doc:name="Choice" doc:id="6d23d789-b962-4acb-9507-d427b85d0873" >
+			<when expression="#[sizeOf(payload) !=0]">
+				<ee:transform doc:name="Transform Message" doc:id="43218630-8b2c-474f-9431-c3e486c688ba" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  status: 200,
+  message: "SignIn Success"
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</when>
+			<otherwise >
+				<ee:transform doc:name="Transform Message" doc:id="918d6d15-3805-4d8d-9cfa-b489d547521d" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"Status" : "1001",
+	"Message" :"User Doesn't Exist"
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</otherwise>
+		</choice>
+	</sub-flow>
+</mule>

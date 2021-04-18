@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="implementaion-walletSub_Flow" doc:id="949f7cda-e254-436d-8070-044da4103786" >
+		<db:select doc:name="Select" doc:id="57839f28-4fe1-46b2-b805-87af0de992e0" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from wallet where customerName =:customerName]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	customerName:attributes.queryParams.customerName
+}]]]></db:input-parameters>
+		</db:select>
+		<ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload map (row,index)->{
+	"customerName" : row.customerName,
+	"date" : row.date,
+	"time" : row.time,
+	"TotalAmount" : row.TotalAmount,
+	"Withdral" : row.Withdral,
+	"Deposite" : row.Deposite
+		}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+	</sub-flow>
+</mule>

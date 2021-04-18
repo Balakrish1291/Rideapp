@@ -1,0 +1,296 @@
+{
+	"info": {
+		"_postman_id": "de655368-c89f-45ab-9184-d253e4d2571c",
+		"name": "RideApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "signin",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/signin?customerName=mani&customerpassword=demo@123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"signin"
+					],
+					"query": [
+						{
+							"key": "customerName",
+							"value": "mani"
+						},
+						{
+							"key": "customerpassword",
+							"value": "demo@123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "registrations-SignUp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customerName\" : \"aac\",\r\n  \"customerMobile\" : 64123336,\r\n  \"customerAddress\" : \"Hyderabad\",\r\n  \"customerEmailid\" : \"abc@gmail.com\",\r\n  \"customerpassword\" : 112233\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/registrations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"registrations"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "4",
+							"disabled": true
+						},
+						{
+							"key": "customerName",
+							"value": "xyzz",
+							"disabled": true
+						},
+						{
+							"key": "customerMobile",
+							"value": "1234564444",
+							"disabled": true
+						},
+						{
+							"key": "customerAddress",
+							"value": "Khammam",
+							"disabled": true
+						},
+						{
+							"key": "customerEmailid",
+							"value": "bbc@gmail.com",
+							"disabled": true
+						},
+						{
+							"key": "customerpassword",
+							"value": "assdafd",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "customerSupport",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customerName\" : \"xyzz\",\r\n  \"message\" : \"issue in SignIN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/customerSupport",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"customerSupport"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Booking",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customerName\" : \"asdf\",\r\n  \"from\" : \"DSNR\",\r\n  \"to\" : \" KBHP\",\r\n  \"date\" : \"05-04-2021\",\r\n  \"time\" : \"1:09:10 PM\",\r\n  \"cost\" : \"200\",\r\n  \"coupon\" : \"\",\r\n  \"status\" : \"confirm\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/book",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cancel",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerName\": \"asdf\",\r\n    \"from\": \"DSNR\",\r\n    \"to\": \" KBHP\",\r\n    \"date\": \"08-04-2021\",\r\n    \"time\": \"12:09:10 AM\",\r\n    \"cost\": \"200\",\r\n    \"coupon\": \"\",\r\n    \"status\": \"cancel\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/cancel",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"cancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Booking11",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customerName\" : \"xyzz11\",\r\n  \"from\" : \"DSNR\",\r\n  \"to\" : \" KBHP\",\r\n  \"date\" : \"08-04-2021\",\r\n  \"time\" : \"12:09:10 AM\",\r\n  \"cost\" : \"200\",\r\n  \"coupon\" : \"\",\r\n  \"status\" : \"confirm\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/book",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "wallet",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/walletManagement?customerName=asdf",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"walletManagement"
+					],
+					"query": [
+						{
+							"key": "customerName",
+							"value": "asdf"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pastrides",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/checkPast/xyz",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"checkPast",
+						"xyz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "discount/customerName",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/discount/asdf",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"discount",
+						"asdf"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

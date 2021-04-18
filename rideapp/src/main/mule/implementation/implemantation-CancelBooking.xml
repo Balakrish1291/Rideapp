@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="implemantation-CancelBookingSub_Flow" doc:id="f051adbd-8697-4ccc-a0fe-e38173fc0deb">
+		<db:update doc:name="Update" doc:id="164af405-a74b-48e7-a4cb-d95868995750" config-ref="Database_Config">
+			<db:sql ><![CDATA[Update book SET status = 'cancel' where ticketNumber =:ticketNumber]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	ticketNumber:payload.ticketNumber
+}]]]></db:input-parameters>
+		</db:update>
+		<ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  status: 200,
+  message: "Cancel Booking"
+}]]></ee:set-payload>
+            </ee:message>
+            </ee:transform>
+	</sub-flow>
+</mule>

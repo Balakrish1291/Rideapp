@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="implemantation-CancelBooking-suite.xml" />
+	<munit:test name="implemantation-CancelBookingSub_Flow-test" doc:id="6a93f50a-3a98-4450-9999-80f61a175054" >
+		<munit:behavior >
+			<munit:set-event doc:name="Set Input" doc:id="4748ac02-d579-4d20-976c-8fb8ad292e7d" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://implemantationCancelBookingSubFlowtest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+				<munit:attributes value="#[readUrl('classpath://implemantationCancelBookingSubFlowtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://implemantationCancelBookingSubFlowtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to implemantation-CancelBookingSub_Flow" doc:id="b708b69d-48a8-4c23-9dd9-cac8d78a9dbf" name="implemantation-CancelBookingSub_Flow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="daaa0303-8aff-405d-b11d-f5d95631c42e" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import implemantationCancelBookingSubFlowtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

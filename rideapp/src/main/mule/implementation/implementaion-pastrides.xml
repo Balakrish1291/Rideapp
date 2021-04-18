@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="implementaion-pastridesSub_Flow" doc:id="f06ef11a-263e-427c-8b7f-b72d95ecd116" >
+		<db:select doc:name="Select" doc:id="b661aa02-1d2f-4aa5-9966-8e280d7823e8" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from book where customerName=:customerName;]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	customerName:attributes.uriParams.customerName
+}]]]></db:input-parameters>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="c56baa7a-d88f-4f59-a97a-79c6bb23504b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map (row,index) ->{
+	"customerName" : row.customerName,
+	"from" : row.from,
+	"to" : row.to,
+	"date" :row.date,
+	"time" : row.time,
+	"cost" : row.cost,
+	"status" : row.status,
+	"ticketNumber" : row.ticketNumber
+	}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>

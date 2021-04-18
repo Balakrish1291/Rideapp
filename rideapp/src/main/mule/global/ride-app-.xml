@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="ride-app--main">
+        <http:listener config-ref="ride-app--httpListenerConfig" path="/api/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="ride-app--config" />
+        <error-handler ref="global_errorError_Handler">
+            
+        </error-handler>
+    </flow>
+    <flow name="ride-app--console">
+        <http:listener config-ref="ride-app--httpListenerConfig" path="/console/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:console config-ref="ride-app--config" />
+		<error-handler ref="global_errorError_Handler" />
+    </flow>
+    <flow name="get:\checkPast\(customerName):ride-app--config">
+		<flow-ref doc:name="Flow Reference" doc:id="9645d4ce-831b-4181-8c6c-7220ff251432" name="implementaion-pastridesSub_Flow"/>
+    </flow>
+    <flow name="get:\discount\(customerName):ride-app--config">
+        <flow-ref doc:name="Flow Reference" doc:id="d5fec2ff-3691-4ec4-8d7e-e840a7e05e8c" name="implementation-discountNotificationSub_Flow"/>
+    </flow>
+    <flow name="get:\signin:ride-app--config">
+		<ee:transform doc:name="Transform Message" doc:id="c467479a-35ee-4080-8b28-2a59da5f55b8" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="customerName" ><![CDATA[attributes.queryParams.customerName]]></ee:set-variable>
+				<ee:set-variable variableName="customerpassword" ><![CDATA[attributes.queryParams.customerpassword]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="a434bc19-52eb-4fd1-8df3-cca2648a1947" name="implementaion-signInSub_Flow"/>
+    </flow>
+    <flow name="get:\walletManagement:ride-app--config">
+        <flow-ref doc:name="Flow Reference" doc:id="62bc992e-e9f1-4765-8a15-2de3cd604625" name="implementaion-walletSub_Flow"/>
+		
+    </flow>
+    <flow name="post:\book:application\json:ride-app--config">
+		<flow-ref doc:name="Flow Reference book" doc:id="8ccbc90e-0825-444e-ad66-535bfef0e29f" name="implementation-bookSub_Flow"/>
+        
+    </flow>
+    <flow name="patch:\cancel:application\json:ride-app--config">
+		<flow-ref doc:name="Flow Reference" doc:id="f7b7c31c-3c51-4ff0-9cc6-baceb49beb65" name="implemantation-CancelBookingSub_Flow"/>
+        
+       
+    </flow>
+    <flow name="post:\customerSupport:ride-app--config">
+        <flow-ref doc:name="Flow Reference" doc:id="cbb68ff2-8d7b-46c9-a678-a80b506d1183" name="implementation-customersupportSub_Flow"/>
+		
+    </flow>
+    <flow name="post:\registrations:application\json:ride-app--config">
+        <flow-ref doc:name="Flow Reference" doc:id="694437f5-4df6-4d50-ae43-18f919e70093" name="implementation-signUpSub_Flow"/>
+		
+    </flow>
+</mule>

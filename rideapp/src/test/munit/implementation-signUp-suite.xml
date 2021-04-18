@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="implementation-signUp-suite.xml" />
+	<munit:test name="implementation-signUpSub_Flow-test" doc:id="03127cd6-c374-473e-9423-17d994834fa8" >
+		<munit:behavior >
+			<munit-tools:spy doc:name="Spy Transform Message" doc:id="c9198de1-cec2-4990-9114-b482c054dd12" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="a59b4237-3804-4e89-be1e-f1f6b394dcb9" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="808184c7-8b1b-43a1-98af-f56796f80b3b" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import implementationsignUpSubFlowtest::spy_assert_payload
+---
+spy_assert_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+					<munit-tools:assert doc:name="Assert variables" doc:id="3d0c8cf8-1e64-40c7-9e93-21f90a237372" message="The variables do not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import implementationsignUpSubFlowtest::spy_assert_variables
+---
+spy_assert_variables::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="b179aa08-35e2-4476-85b0-f6e47c6455d7" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import implementationsignUpSubFlowtest::spy_assert_payload1
+---
+spy_assert_payload1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+			<munit-tools:spy doc:name="Spy Insert" doc:id="4d6c8571-a422-4c18-bec1-0a085fe84794" processor="db:insert">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="3c6654ad-0fc2-414d-b488-4ec9534e01e0" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="5c3a6939-512c-40a8-a0cf-974381b65c20" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import implementationsignUpSubFlowtest::spy_assert_payload2
+---
+spy_assert_payload2::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+					<munit-tools:assert doc:name="Assert attributes" doc:id="afdbe8d0-6b2a-40b1-8e6d-bcf33415ca1d" message="The attributes do not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import implementationsignUpSubFlowtest::spy_assert_attributes
+---
+spy_assert_attributes::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="a249fab9-1492-4bbb-a3b0-b57735a9fea4" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import implementationsignUpSubFlowtest::spy_assert_payload3
+---
+spy_assert_payload3::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+			<munit:set-event doc:name="Set Input" doc:id="6a694185-7b80-4f22-8e72-e387ac25b98f" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://implementationsignUpSubFlowtest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+				<munit:attributes value="#[readUrl('classpath://implementationsignUpSubFlowtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://implementationsignUpSubFlowtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to implementation-signUpSub_Flow" doc:id="f7ddd2d6-3936-4b05-8fac-50cb2485814e" name="implementation-signUpSub_Flow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="c77650e3-34b3-40f4-b914-ad8314f06982" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import implementationsignUpSubFlowtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="0f97fee4-c1aa-4b28-90b8-f8dbc882acbb" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="a59b4237-3804-4e89-be1e-f1f6b394dcb9" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Insert" doc:id="47233df7-371e-45ce-9ac6-8bf4e6100ea8" processor="db:insert" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="3c6654ad-0fc2-414d-b488-4ec9534e01e0" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
